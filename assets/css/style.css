@@ -1,0 +1,36 @@
+
+* {
+    background-color: #55f;
+    margin: 0;
+    padding: 0;
+}
+
+
+.gameTitle {
+    text-align: center;
+    padding: 30px;
+    color: #0ff;
+    letter-spacing: 5px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.tileGrid{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tile{
+    flex: 1 1 25%;
+    background-color: #000;
+    border: 1px #eee solid;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.tile:hover {
+    border: 2px solid #fff;
+}
+
+#tile1 {
+    
+}
