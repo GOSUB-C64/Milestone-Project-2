@@ -16,7 +16,11 @@ $(window).resize(function () {
 function pickTile() {
   // pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
   nextTile = Math.floor(Math.random() * 16) + 1;
-  //   tileSeq += nextTile;
+  if(nextTile<10){
+      var temp = nextTile;
+      nextTile = '0' + temp;
+  }
+  tileSeq += nextTile;
   return nextTile;
 }
 
@@ -24,31 +28,31 @@ function getColour(nextTile) {
   // pick another random number and assign it a colour.
   nextColour = nextTile;
   switch (nextColour) {
-    case 01:
+    case '01':
       colour = "Red";
       return colour;
-    case 02:
+    case '02':
       colour = "Green";
       return colour;
-    case 03:
+    case '03':
       colour = "Blue";
       return colour;
-    case 04:
+    case '04':
       colour = "Yellow";
       return colour;
-    case 05:
+    case '05':
       colour = "Orange";
       return colour;
-    case 06:
+    case '06':
       colour = "Magenta";
       return colour;
-    case 07:
+    case '07':
       colour = "White";
       return colour;
-    case 08:
+    case '08':
       colour = "Violet";
       return colour;
-    case 09:
+    case '09':
       colour = "Cyan";
       return colour;
     case 10:
@@ -129,24 +133,31 @@ function displayColouredTile(nextTile, colour) {
 }
 
 // Main Game Logic
-// array to hold tile Id's
-var tileSeq = [];
 function setToGrid() {
   var nextTile = pickTile();
   var colour = getColour(nextTile);
   displayColouredTile(nextTile, colour);
 
-  console.log(nextTile, colour);
-}
-  var x = 0;
-  var intervalId = setInterval(function(){
-      if(x === 10){
-      clearInterval(intervalId);
-   }
-   console.log(x);
-   x++;
-   var timoutId = setTimeout(function(){ 
-       setToGrid();
-   }, 1000);
-}, 1000);
+  console.log("tileSeq = ", tileSeq, "nextTile = ", nextTile, colour);
 
+}
+
+// array to hold tile Id's
+var tileSeq = [];
+
+// gameCount will be used to keep track of each game.
+var gameCount = 4;
+
+// x is a loop counter.
+var x = 1;
+
+var intervalId = setInterval(function () {
+  if (x === gameCount) {
+    clearInterval(intervalId);
+  }
+  console.log("iteration", x);
+  x++;
+  var timeoutId = setTimeout(function () {
+    setToGrid();
+  }, 1000);
+}, 1000);
