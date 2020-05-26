@@ -28,9 +28,5 @@
 }
 
 .tile:hover {
-    border: 2px solid #fff;
-}
-
-#tile1 {
-    
+    border: 5px solid #000;
 }

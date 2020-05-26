@@ -13,46 +13,42 @@ $(window).resize(function () {
   responsiveGrid();
 });
 
-// array to hold tile Id's
-var tileSeq = [];
-
 function pickTile() {
   // pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
-  var nextTile = Math.floor(Math.random() * 16) + 1;
-  tileSeq += nextTile;
+  nextTile = Math.floor(Math.random() * 16) + 1;
+  //   tileSeq += nextTile;
   return nextTile;
 }
 
-function getColour() {
+function getColour(nextTile) {
   // pick another random number and assign it a colour.
-  var nextColour = Math.floor(Math.random() * 16) + 1;
-
+  nextColour = nextTile;
   switch (nextColour) {
-    case 1:
+    case 01:
       colour = "Red";
       return colour;
-    case 2:
+    case 02:
       colour = "Green";
       return colour;
-    case 3:
+    case 03:
       colour = "Blue";
       return colour;
-    case 4:
+    case 04:
       colour = "Yellow";
       return colour;
-    case 5:
+    case 05:
       colour = "Orange";
       return colour;
-    case 6:
+    case 06:
       colour = "Magenta";
       return colour;
-    case 7:
+    case 07:
       colour = "White";
       return colour;
-    case 8:
+    case 08:
       colour = "Violet";
       return colour;
-    case 9:
+    case 09:
       colour = "Cyan";
       return colour;
     case 10:
@@ -131,12 +127,26 @@ function displayColouredTile(nextTile, colour) {
       break;
   }
 }
-var gameOver = 0;
 
-
-  nextTile = pickTile();
-  colour = getColour();
+// Main Game Logic
+// array to hold tile Id's
+var tileSeq = [];
+function setToGrid() {
+  var nextTile = pickTile();
+  var colour = getColour(nextTile);
   displayColouredTile(nextTile, colour);
 
-  console.log(tileSeq, colour);
+  console.log(nextTile, colour);
+}
+  var x = 0;
+  var intervalId = setInterval(function(){
+      if(x === 10){
+      clearInterval(intervalId);
+   }
+   console.log(x);
+   x++;
+   var timoutId = setTimeout(function(){ 
+       setToGrid();
+   }, 1000);
+}, 1000);
 
