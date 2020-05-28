@@ -15,8 +15,8 @@ $(window).resize(function () {
 
 function pickTile() {
   // pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
-//   nextTile = Math.floor(Math.random() * 16) + 1;
-  nextTile = 6;
+  nextTile = Math.floor(Math.random() * 16) + 1;
+  //   nextTile = 6;
   // build tileSeq array to hold pattern
   // keep array to 2 digits for each number -- (i.e. 2 becomes 02, 8 becomes 08)
   // this makes it easier to work with later.
@@ -103,7 +103,7 @@ function displayColouredTile(nextTile, colour) {
       break;
     case 6:
       $("#tile6").css("background-color", colour);
-    //   $("#tile6").addClass(active);
+      //   $("#tile6").addClass(active);
       break;
     case 7:
       $("#tile7").css("background-color", colour);
@@ -138,37 +138,31 @@ function displayColouredTile(nextTile, colour) {
   }
 }
 
-// Main Game Logic
-function setToGrid() {
+function setTile() {
   var nextTile = pickTile();
   var colour = getColour(nextTile);
-  displayColouredTile(nextTile, colour);
-
+  // gameCount will be used to keep track of each game.
+  var gameCount = 2;
   console.log("tileSeq = ", tileSeq, "nextTile = ", nextTile, colour);
+
+  // x is a loop counter for the setTimeout function.
+  var x = 1;
+  var gameSpeed = 1000;
+  var intervalId = setInterval(function () {
+    if (x === gameCount) {
+      clearInterval(intervalId);
+    }
+    console.log("iteration", x);
+    x++;
+    var timeoutId = setTimeout(function () {
+      displayColouredTile(nextTile, colour);
+    }, 1000);
+  }, gameSpeed);
 }
 
 // array to hold tile Id's
 var tileSeq = [];
 
-// gameCount will be used to keep track of each game.
-var gameCount = 1;
+// Main Game Logic
 
-// x is a loop counter.
-var x = 1;
-var gameSpeed = 1000;
-var intervalId = setInterval(function () {
-  if (x === gameCount) {
-    clearInterval(intervalId);
-  }
-  console.log("iteration", x);
-  x++;
-  var timeoutId = setTimeout(function () {
-    setToGrid();
-  }, 500);
-}, gameSpeed);
-
-newFunction();
-function newFunction() {
-    $("this").css("background-color", "black");
-}
-
+setTile();
