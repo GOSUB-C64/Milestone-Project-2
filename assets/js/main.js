@@ -148,21 +148,20 @@ function setTile() {
   // x is a loop counter for the setTimeout function.
   var x = 1;
   var gameSpeed = 1000;
-  var intervalId = setInterval(function () {
+  var intervalId = setInterval(displayColouredTile(nextTile, colour), gameSpeed)
     if (x === gameCount) {
       clearInterval(intervalId);
     }
     console.log("iteration", x);
     x++;
-    var timeoutId = setTimeout(function () {
-      displayColouredTile(nextTile, colour);
-    }, 1000);
-  }, gameSpeed);
+  
 }
 
 // array to hold tile Id's
 var tileSeq = [];
 
 // Main Game Logic
+for (var i=1; i<5; i++) {
+    setTile();
+}
 
-setTile();
