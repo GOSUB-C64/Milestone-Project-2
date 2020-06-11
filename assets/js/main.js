@@ -142,26 +142,24 @@ function setTile() {
   var nextTile = pickTile();
   var colour = getColour(nextTile);
   // gameCount will be used to keep track of each game.
-  var gameCount = 2;
   console.log("tileSeq = ", tileSeq, "nextTile = ", nextTile, colour);
+  displayColouredTile(nextTile, colour)
+}
 
-  // x is a loop counter for the setTimeout function.
-  var x = 1;
-  var gameSpeed = 1000;
-  var intervalId = setInterval(displayColouredTile(nextTile, colour), gameSpeed)
+// array to keep track of the tile Id's
+let tileSeq = [];
+var gameCount = 2;
+
+// Main Game Logic
+for (var i=1; i<=5; i++) {
+     // x is a loop counter for the setInterval function.
+  let x = 1;
+  let gameSpeed = 1000;
+  let interval = setInterval(setTile(), gameSpeed)
     if (x === gameCount) {
-      clearInterval(intervalId);
+      clearInterval(interval);
     }
     console.log("iteration", x);
     x++;
-  
-}
-
-// array to hold tile Id's
-var tileSeq = [];
-
-// Main Game Logic
-for (var i=1; i<5; i++) {
-    setTile();
 }
 
