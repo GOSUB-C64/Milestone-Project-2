@@ -16,7 +16,7 @@ $(window).resize(function () {
 function pickTile() {
   // pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
   nextTile = Math.floor(Math.random() * 16) + 1;
-  //   nextTile = 6;
+  
   // build tileSeq array to hold pattern
   // keep array to 2 digits for each number -- (i.e. 2 becomes 02, 8 becomes 08)
   // this makes it easier to work with later.
@@ -24,7 +24,7 @@ function pickTile() {
     var temp = nextTile;
     tileSeq += "0" + temp;
   } else {
-    tileSeq += nextTile;
+    tileSeq += nextTile; /* add to array */
   }
   return nextTile;
 }
@@ -139,27 +139,38 @@ function displayColouredTile(nextTile, colour) {
 }
 
 function setTile() {
-  var nextTile = pickTile();
-  var colour = getColour(nextTile);
+  nextTile = pickTile();
+  colour = getColour(nextTile);
   // gameCount will be used to keep track of each game.
-  console.log("tileSeq = ", tileSeq, "nextTile = ", nextTile, colour);
-  displayColouredTile(nextTile, colour)
+  displayColouredTile(nextTile, colour);
+
+  iteration++;
+  if(iteration ===  gameCount){
+      clearInterval(interval);
+      console.log("finished");
+  }
+  console.log("tileSeq = ", tileSeq, "nextTile = ", nextTile, colour, iteration);
+
 }
 
 // array to keep track of the tile Id's
 let tileSeq = [];
-var gameCount = 2;
+
+var nextTile;
+var colour;
+
+const gameSpeed = 500;
+var iteration = 0; 
+var gameCount = 2;  /* game starts at 1 grid square being shown */
+
+
 
 // Main Game Logic
-for (var i=1; i<=5; i++) {
-     // x is a loop counter for the setInterval function.
-  let x = 1;
-  let gameSpeed = 1000;
-  let interval = setInterval(setTile(), gameSpeed)
-    if (x === gameCount) {
-      clearInterval(interval);
-    }
-    console.log("iteration", x);
-    x++;
-}
+
+     // iteration is a loop counter for the setInterval function.
+  
+  
+  var interval = setInterval(setTile(), gameSpeed, iteration, gameCount);
+    
+
 
