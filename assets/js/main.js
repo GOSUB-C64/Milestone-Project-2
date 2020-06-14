@@ -149,7 +149,7 @@ function setTile() {
       clearInterval(interval);
       console.log("finished");
   }
-  console.log("tileSeq = ", tileSeq, "nextTile = ", nextTile, colour, iteration);
+  console.log("tileSeq =", tileSeq, "nextTile =", nextTile, "colour =", colour, "gameCount =", iteration);
 
 }
 
@@ -159,9 +159,9 @@ let tileSeq = [];
 var nextTile;
 var colour;
 
-const gameSpeed = 500;
+const gameSpeed = 1000;
 var iteration = 0; 
-var gameCount = 2;  /* game starts at 1 grid square being shown */
+var gameCount = 5;  /* game starts at 1 grid square being shown */
 
 
 
@@ -170,7 +170,7 @@ var gameCount = 2;  /* game starts at 1 grid square being shown */
      // iteration is a loop counter for the setInterval function.
   
   
-  var interval = setInterval(setTile(), gameSpeed, iteration, gameCount);
+  var interval = setInterval(setTile, gameSpeed, iteration, gameCount);
     
 
 
