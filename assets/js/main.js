@@ -16,7 +16,7 @@ $(window).resize(function () {
 function pickTile() {
   // pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
   nextTile = Math.floor(Math.random() * 16) + 1;
-  
+
   // build tileSeq array to hold pattern
   // keep array to 2 digits for each number -- (i.e. 2 becomes 02, 8 becomes 08)
   // this makes it easier to work with later.
@@ -139,18 +139,28 @@ function displayColouredTile(nextTile, colour) {
 }
 
 function setTile() {
-  nextTile = pickTile();
-  colour = getColour(nextTile);
-  // gameCount will be used to keep track of each game.
-  displayColouredTile(nextTile, colour);
+  if (iteration < gameCount) {
+    nextTile = pickTile();
+    colour = getColour(nextTile);
+    displayColouredTile(nextTile, colour);
 
-  iteration++;
-  if(iteration ===  gameCount){
-      clearInterval(interval);
-      console.log("finished");
+    iteration++;
+  } else if (iteration === gameCount) {
+    clearInterval(interval);
+    console.log("**** FINISHED ****");
   }
-  console.log("tileSeq =", tileSeq, "nextTile =", nextTile, "colour =", colour, "gameCount =", iteration);
-
+  console.log(
+    "tileSeq =",
+    tileSeq,
+    "nextTile =",
+    nextTile,
+    "colour =",
+    colour,
+    "gameCount =",
+    gameCount,
+    "iteration =",
+    iteration
+  );
 }
 
 // array to keep track of the tile Id's
@@ -160,17 +170,14 @@ var nextTile;
 var colour;
 
 const gameSpeed = 1000;
-var iteration = 0; 
-var gameCount = 5;  /* game starts at 1 grid square being shown */
+var iteration = 0; /* loop counter for the setInterval function */
 
+var gameCount = 1; /* game starts at 1 grid square being shown */
 
+////////// Main Game Logic //////////
 
-// Main Game Logic
+var interval = setInterval(setTile, gameSpeed, iteration, gameCount);
 
-     // iteration is a loop counter for the setInterval function.
-  
-  
-  var interval = setInterval(setTile, gameSpeed, iteration, gameCount);
-    
-
-
+// test to increase gameCount //
+// gameCount = 2;
+// interval = setInterval(setTile, gameSpeed, iteration, gameCount);
