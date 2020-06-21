@@ -13,8 +13,9 @@ $(window).resize(function () {
   responsiveGrid();
 });
 
+
+// pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
 function pickTile() {
-  // pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
   nextTile = Math.floor(Math.random() * 16) + 1;
 
   // build tileSeq array to hold pattern
@@ -29,8 +30,9 @@ function pickTile() {
   return nextTile;
 }
 
+
+// assign each tile (div) its own color
 function getColour(nextTile) {
-  // pick another random number and assign it a colour.
   nextColour = nextTile;
   switch (nextColour) {
     case 1:
@@ -84,60 +86,77 @@ function getColour(nextTile) {
   }
 }
 
+
+// display on screen and save this current tile to 'currentTile' 
 function displayColouredTile(nextTile, colour) {
   switch (nextTile) {
     case 1:
       $("#tile1").css("background-color", colour);
+      currentTile = "#tile1";
       break;
     case 2:
       $("#tile2").css("background-color", colour);
+      currentTile = "#tile2";
       break;
     case 3:
       $("#tile3").css("background-color", colour);
+      currentTile = "#tile3";
       break;
     case 4:
       $("#tile4").css("background-color", colour);
+      currentTile = "#tile4";
       break;
     case 5:
       $("#tile5").css("background-color", colour);
+      currentTile = "#tile5";
       break;
     case 6:
       $("#tile6").css("background-color", colour);
-      //   $("#tile6").addClass(active);
+      currentTile = "#tile6";
       break;
     case 7:
       $("#tile7").css("background-color", colour);
+      currentTile = "#tile7";
       break;
     case 8:
       $("#tile8").css("background-color", colour);
+      currentTile = "#tile8";
       break;
     case 9:
       $("#tile9").css("background-color", colour);
+      currentTile = "#tile9";
       break;
     case 10:
       $("#tile10").css("background-color", colour);
+      currentTile = "#tile10";
       break;
     case 11:
       $("#tile11").css("background-color", colour);
+      currentTile = "#tile11";
       break;
     case 12:
       $("#tile12").css("background-color", colour);
+      currentTile = "#tile12";
       break;
     case 13:
       $("#tile13").css("background-color", colour);
+      currentTile = "#tile13";
       break;
     case 14:
       $("#tile14").css("background-color", colour);
+      currentTile = "#tile14";
       break;
     case 15:
       $("#tile15").css("background-color", colour);
+      currentTile = "#tile15";
       break;
     case 16:
       $("#tile16").css("background-color", colour);
+      currentTile = "#tile16";
       break;
   }
 }
-
+// putting it together 
 function setTile() {
   if (iteration < gameCount) {
     nextTile = pickTile();
@@ -145,9 +164,10 @@ function setTile() {
     displayColouredTile(nextTile, colour);
 
     iteration++;
-  } else if (iteration === gameCount) {
+  } else {
     clearInterval(interval);
     console.log("**** FINISHED ****");
+    return;
   }
   console.log(
     "tileSeq =",
@@ -168,16 +188,21 @@ let tileSeq = [];
 
 var nextTile;
 var colour;
+var currentTile;
 
 const gameSpeed = 1000;
 var iteration = 0; /* loop counter for the setInterval function */
 
-var gameCount = 1; /* game starts at 1 grid square being shown */
+var gameCount = 3; /* game starts at 1 grid square being shown */
 
 ////////// Main Game Logic //////////
 
 var interval = setInterval(setTile, gameSpeed, iteration, gameCount);
 
-// test to increase gameCount //
-// gameCount = 2;
-// interval = setInterval(setTile, gameSpeed, iteration, gameCount);
+//test to increase gameCount //
+gameCount = 2;
+interval = setInterval(setTile, gameSpeed, iteration, gameCount);
+
+// interval = setInterval(function(){
+//     $(currentTile).css('background-color', '#000');
+// }, gameSpeed);
