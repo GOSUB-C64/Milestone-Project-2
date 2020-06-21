@@ -166,8 +166,9 @@ function setTile() {
     iteration++;
   } else {
     clearInterval(interval);
+    iteration = 0;
     console.log("**** FINISHED ****");
-    return;
+    
   }
   console.log(
     "tileSeq =",
@@ -193,7 +194,7 @@ var currentTile;
 const gameSpeed = 1000;
 var iteration = 0; /* loop counter for the setInterval function */
 
-var gameCount = 3; /* game starts at 1 grid square being shown */
+var gameCount = 1; /* game starts at 1 grid square being shown */
 
 ////////// Main Game Logic //////////
 
