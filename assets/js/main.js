@@ -166,7 +166,6 @@ function setTile() {
     iteration++;
   } else {
     clearInterval(interval);
-    iteration = 0;
     console.log("**** FINISHED ****");
     
   }
@@ -201,7 +200,9 @@ var gameCount = 1; /* game starts at 1 grid square being shown */
 var interval = setInterval(setTile, gameSpeed, iteration, gameCount);
 
 //test to increase gameCount //
+iteration = 0;
 gameCount = 2;
+interval = null;
 interval = setInterval(setTile, gameSpeed, iteration, gameCount);
 
 // interval = setInterval(function(){
