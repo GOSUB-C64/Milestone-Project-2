@@ -4,15 +4,12 @@ function responsiveGrid() {
   $(".tile").css("height", width);
 }
 
-// responsiveGrid();
-
 $(document).ready(function () {
   responsiveGrid();
 });
 $(window).resize(function () {
   responsiveGrid();
 });
-
 
 // pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
 function pickTile() {
@@ -29,7 +26,6 @@ function pickTile() {
   }
   return nextTile;
 }
-
 
 // assign each tile (div) its own color
 function getColour(nextTile) {
@@ -86,8 +82,7 @@ function getColour(nextTile) {
   }
 }
 
-
-// display on screen and save this current tile to 'currentTile' 
+// display on screen and save this current tile to 'currentTile'
 function displayColouredTile(nextTile, colour) {
   switch (nextTile) {
     case 1:
@@ -156,7 +151,7 @@ function displayColouredTile(nextTile, colour) {
       break;
   }
 }
-// putting it together 
+// putting it together
 function setTile() {
   if (iteration < gameCount) {
     nextTile = pickTile();
@@ -167,7 +162,6 @@ function setTile() {
   } else {
     clearInterval(interval);
     console.log("**** FINISHED ****");
-    
   }
   console.log(
     "tileSeq =",
@@ -183,6 +177,8 @@ function setTile() {
   );
 }
 
+$("div").addClass("clearTiles");
+
 // array to keep track of the tile Id's
 let tileSeq = [];
 
@@ -194,17 +190,14 @@ const gameSpeed = 1000;
 var iteration = 0; /* loop counter for the setInterval function */
 
 var gameCount = 1; /* game starts at 1 grid square being shown */
+let interval;
 
 ////////// Main Game Logic //////////
 
-var interval = setInterval(setTile, gameSpeed, iteration, gameCount);
-
-//test to increase gameCount //
-iteration = 0;
-gameCount = 2;
-interval = null;
 interval = setInterval(setTile, gameSpeed, iteration, gameCount);
 
-// interval = setInterval(function(){
-//     $(currentTile).css('background-color', '#000');
-// }, gameSpeed);
+console.log("XXXXXXXXXXXXXXXXXXX");
+interval = setInterval(function () {
+  $(currentTile).css("background-color", "#000");
+}, 2000);
+clearInterval(interval);

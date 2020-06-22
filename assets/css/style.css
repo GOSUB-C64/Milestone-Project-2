@@ -30,3 +30,7 @@
 .tile:hover {
     border: 5px solid #fff;
 }
+
+.clearTiles {
+    background-color: #000;
+}
