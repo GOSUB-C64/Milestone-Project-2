@@ -11,19 +11,15 @@ $(window).resize(function () {
   responsiveGrid();
 });
 
+
+
 // pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
 function pickTile() {
   nextTile = Math.floor(Math.random() * 16) + 1;
 
   // build tileSeq array to hold pattern
-  // keep array to 2 digits for each number -- (i.e. 2 becomes 02, 8 becomes 08)
-  // this makes it easier to work with later.
-  if (nextTile < 10) {
-    var temp = nextTile;
-    tileSeq += "0" + temp;
-  } else {
-    tileSeq += nextTile; /* add to array */
-  }
+  tileSeq.push(nextTile); /* add to array */
+
   return nextTile;
 }
 
@@ -158,7 +154,7 @@ function setTile() {
     nextTile = pickTile();
     colour = getColour(nextTile);
     displayColouredTile(nextTile, colour);
-
+    tileArray.push(currentTile);
   } else {
     clearInterval(interval);
     console.log("**** FINISHED ****");
@@ -173,13 +169,17 @@ function setTile() {
     "gameCount =",
     gameCount,
     "iteration =",
-    iteration
+    iteration,
+    "currentTile =",
+    currentTile,
+    "tileArray =",
+    tileArray
   );
 }
 
-function clearTile(){
-    $(currentTile).css("background-color", "#000");
-    // clearInterval(interval2);
+function clearTile() {
+  $(currentTile).css("background-color", "#000");
+  // clearInterval(interval2);
 }
 
 $("div").addClass("clearTiles");
@@ -187,14 +187,17 @@ $("div").addClass("clearTiles");
 // array to keep track of the tile Id's
 let tileSeq = [];
 
+let tileArray = [];
+
 var nextTile;
 var colour;
 var currentTile;
 
 const gameSpeed = 1500;
-var iteration = 0; /* loop counter for the setInterval function */
 
-var gameCount = 4; /* game starts at 1 grid square being shown */
+var iteration = 0; /* loop counter for the setInterval function */
+var gameCount = 5; /* game starts at 1 grid square being shown */
+
 let interval;
 let interval2;
 
@@ -204,9 +207,12 @@ interval = setInterval(setTile, gameSpeed, iteration, gameCount);
 interval2 = setInterval(clearTile, 1100);
 
 
+// which tile was clicked? //
+$('.tile').click(function(){
+       var gridId = "#" + $(this).attr('id');
+       console.log(gridId);
+ });
 
-
-
-
-
-
+ if(gridId === tileSeq[0] || gridId === tileSeq[1]){
+     console.log("YES LAD!");
+ }
