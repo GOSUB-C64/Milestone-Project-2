@@ -154,11 +154,11 @@ function displayColouredTile(nextTile, colour) {
 // putting it together
 function setTile() {
   if (iteration < gameCount) {
+    ++iteration;
     nextTile = pickTile();
     colour = getColour(nextTile);
     displayColouredTile(nextTile, colour);
 
-    iteration++;
   } else {
     clearInterval(interval);
     console.log("**** FINISHED ****");
@@ -177,6 +177,11 @@ function setTile() {
   );
 }
 
+function clearTile(){
+    $(currentTile).css("background-color", "#000");
+    // clearInterval(interval2);
+}
+
 $("div").addClass("clearTiles");
 
 // array to keep track of the tile Id's
@@ -186,18 +191,22 @@ var nextTile;
 var colour;
 var currentTile;
 
-const gameSpeed = 1000;
+const gameSpeed = 1500;
 var iteration = 0; /* loop counter for the setInterval function */
 
-var gameCount = 1; /* game starts at 1 grid square being shown */
+var gameCount = 4; /* game starts at 1 grid square being shown */
 let interval;
+let interval2;
 
 ////////// Main Game Logic //////////
 
 interval = setInterval(setTile, gameSpeed, iteration, gameCount);
+interval2 = setInterval(clearTile, 1100);
 
-console.log("XXXXXXXXXXXXXXXXXXX");
-interval = setInterval(function () {
-  $(currentTile).css("background-color", "#000");
-}, 2000);
-clearInterval(interval);
+
+
+
+
+
+
+
