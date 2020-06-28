@@ -191,7 +191,8 @@ var nextTile;
 var colour;
 var currentTile;
 
-const gameSpeed = 1500;
+var setTileDelay = 1500;
+var clearTileDelay = setTileDelay - 400;
 
 var iteration = 0; /* loop counter for the setInterval function */
 var gameCount = 5; /* game starts at 1 grid square being shown */
@@ -200,20 +201,25 @@ let interval;
 let interval2;
 
 let gridID = null;
+
+mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
 ////////// Main Game Logic //////////
 
-interval = setInterval(setTile, gameSpeed, iteration, gameCount);
-interval2 = setInterval(clearTile, 1100);
+interval = setInterval(setTile,  setTileDelay, iteration, gameCount);
+interval2 = setInterval(clearTile, clearTileDelay);
 
 // which tile was clicked? //
-if (iteration === gameCount) {
-    console.log("GREAT!");
+let timer = setTimeout(function(){
   $(".tile").click(function () {
+    console.log("GREAT STUFF!");
     gridId = "#" + $(this).attr("id");
-    if (gridId === tileSeq[0]) {
+    if (gridId === tileArray[0]) {
       console.log(gridId);
       console.log("YES LAD!");
+    } else {
+        // Wrong!
+        console.log("WRONG!");
+        console.log(gridId);
     }
-  });
-}
-console.log(tileSeq[0]);
+});
+},mainDelay);
