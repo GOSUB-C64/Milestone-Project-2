@@ -11,8 +11,6 @@ $(window).resize(function () {
   responsiveGrid();
 });
 
-
-
 // pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
 function pickTile() {
   nextTile = Math.floor(Math.random() * 16) + 1;
@@ -201,18 +199,21 @@ var gameCount = 5; /* game starts at 1 grid square being shown */
 let interval;
 let interval2;
 
+let gridID = null;
 ////////// Main Game Logic //////////
 
 interval = setInterval(setTile, gameSpeed, iteration, gameCount);
 interval2 = setInterval(clearTile, 1100);
 
-
 // which tile was clicked? //
-$('.tile').click(function(){
-       var gridId = "#" + $(this).attr('id');
-       console.log(gridId);
- });
-
- if(gridId === tileSeq[0] || gridId === tileSeq[1]){
-     console.log("YES LAD!");
- }
+if (iteration === gameCount) {
+    console.log("GREAT!");
+  $(".tile").click(function () {
+    gridId = "#" + $(this).attr("id");
+    if (gridId === tileSeq[0]) {
+      console.log(gridId);
+      console.log("YES LAD!");
+    }
+  });
+}
+console.log(tileSeq[0]);
