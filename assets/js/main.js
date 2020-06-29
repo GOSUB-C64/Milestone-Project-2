@@ -200,7 +200,7 @@ var gameCount = 2; /* game starts at 1 grid square(tile) being shown */
 let interval;
 let interval2;
 
-let gridID = null;
+let gridID = [];
 // gridID is going to be used to hold the ID of the tile which was clicked
 
 mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
@@ -217,15 +217,15 @@ let timer = setTimeout(function () {
   $(".tile").click(function () {
     do {
       console.log("Tile Clicked!");
-      gridID = "#" + $(this).attr("id");
-      console.log("checking " + gridID + " against " + tileArray[i]);
-      if (gridID === tileArray[i]) {
-        console.log(gridID);
+      gridID[i] = "#" + $(this).attr("id");
+      console.log(`${i} checking ${gridID[i]} against ${tileArray[i]}`);
+      if (gridID[i] === tileArray[i]) {
+        console.log(gridID[i]);
         console.log("CORRECT!");
       } else {
         // Wrong!
         console.log("INCORRECT!");
-        console.log(gridID);
+        console.log(gridID[i]);
       }
       i++;
     } while (i < gameCount);
