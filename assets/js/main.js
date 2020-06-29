@@ -195,31 +195,45 @@ var setTileDelay = 1500;
 var clearTileDelay = setTileDelay - 400;
 
 var iteration = 0; /* loop counter for the setInterval function */
-var gameCount = 5; /* game starts at 1 grid square being shown */
+var gameCount = 2; /* game starts at 1 grid square(tile) being shown */
 
 let interval;
 let interval2;
 
 let gridID = null;
+// gridID is going to be used to hold the ID of the tile which was clicked
 
 mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
+// mainDelay is the total amount of time to wait until all timers are complete before checking user input //
+
 ////////// Main Game Logic //////////
 
-interval = setInterval(setTile,  setTileDelay, iteration, gameCount);
+interval = setInterval(setTile, setTileDelay, iteration, gameCount);
 interval2 = setInterval(clearTile, clearTileDelay);
 
 // which tile was clicked? //
-let timer = setTimeout(function(){
+var i = 0;
+let timer = setTimeout(function () {
   $(".tile").click(function () {
-    console.log("GREAT STUFF!");
-    gridId = "#" + $(this).attr("id");
-    if (gridId === tileArray[0]) {
-      console.log(gridId);
-      console.log("YES LAD!");
-    } else {
+    do {
+      console.log("Tile Clicked!");
+      gridID = "#" + $(this).attr("id");
+      console.log("checking " + gridID + " against " + tileArray[i]);
+      if (gridID === tileArray[i]) {
+        console.log(gridID);
+        console.log("CORRECT!");
+      } else {
         // Wrong!
-        console.log("WRONG!");
-        console.log(gridId);
-    }
-});
-},mainDelay);
+        console.log("INCORRECT!");
+        console.log(gridID);
+      }
+      i++;
+    } while (i < gameCount);
+    clearTimeout(timer);
+  });
+}, mainDelay);
+
+
+// I need to keep track of the users clicks
+// i.e. when click happens, keep a counter to track the number of clicks
+// then use that number to check the ID of the square clicked against the indexed array using " no.of clicks" as the index
