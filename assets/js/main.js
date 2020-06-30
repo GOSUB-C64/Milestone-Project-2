@@ -195,12 +195,13 @@ var setTileDelay = 1500;
 var clearTileDelay = setTileDelay - 400;
 
 var iteration = 0; /* loop counter for the setInterval function */
-var gameCount = 2; /* game starts at 1 grid square(tile) being shown */
+var gameCount = 3 /* game starts at 1 grid square(tile) toggling on/off then increments by 1 each time the user is successful */
 
 let interval;
 let interval2;
 
-let gridID = [];
+let gridID;
+
 // gridID is going to be used to hold the ID of the tile which was clicked
 
 mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
@@ -212,27 +213,35 @@ interval = setInterval(setTile, setTileDelay, iteration, gameCount);
 interval2 = setInterval(clearTile, clearTileDelay);
 
 // which tile was clicked? //
-var i = 0;
+let index = -1;
+let clicked = 0;
+let correct = 0;
 let timer = setTimeout(function () {
   $(".tile").click(function () {
-    do {
+    if (clicked < gameCount) {
+      index += 1;
+      clicked += 1;
       console.log("Tile Clicked!");
-      gridID[i] = "#" + $(this).attr("id");
-      console.log(`${i} checking ${gridID[i]} against ${tileArray[i]}`);
-      if (gridID[i] === tileArray[i]) {
-        console.log(gridID[i]);
-        console.log("CORRECT!");
+      gridID = "#" + $(this).attr("id");
+      console.log(`${index} checking ${gridID} against ${tileArray[index]}`);
+      if (gridID === tileArray[index]) {
+        correct++;
+        console.log(gridID);
+        console.log(`${correct} CORRECT!`);
       } else {
         // Wrong!
         console.log("INCORRECT!");
-        console.log(gridID[i]);
+        console.log(gridID);
       }
-      i++;
-    } while (i < gameCount);
-    clearTimeout(timer);
+    } else {
+        gameCount = 1;
+        clearTimeout(timer);
+    }
+    if(correct === gameCount){
+        gameCount++;
+    }
   });
 }, mainDelay);
-
 
 // I need to keep track of the users clicks
 // i.e. when click happens, keep a counter to track the number of clicks
