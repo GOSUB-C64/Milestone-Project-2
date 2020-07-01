@@ -217,32 +217,36 @@ let index = -1;
 let clicked = 0;
 let correct = 0;
 let timer = setTimeout(function () {
-  $(".tile").click(function () {
-    if (clicked < gameCount) {
-      index += 1;
-      clicked += 1;
-      console.log("Tile Clicked!");
-      gridID = "#" + $(this).attr("id");
-      console.log(`${index} checking ${gridID} against ${tileArray[index]}`);
-      if (gridID === tileArray[index]) {
-        correct++;
-        console.log(gridID);
-        console.log(`${correct} CORRECT!`);
-      } else {
-        // Wrong!
-        console.log("INCORRECT!");
-        console.log(gridID);
-      }
-    } else {
-        gameCount = 1;
-        clearTimeout(timer);
+    if(correct !== gameCount){ // if guess is correct then execute code in this 'IF'
+        $(".tile").click(function () {
+            if (clicked < gameCount) { // does the number of guesses == the number of grid squares illuminated ?
+                index += 1;
+                clicked += 1;
+                console.log("Tile Clicked!");
+                gridID = "#" + $(this).attr("id");
+                console.log(`${index} checking ${gridID} against ${tileArray[index]}`);
+                if (gridID === tileArray[index]) {
+                    correct++;
+                    console.log(gridID);
+                    console.log(`${correct} CORRECT!`);
+                } else {
+                    // Incorrect guess during sequence - at this point the game ends ***
+                    console.log("INCORRECT!");
+                    console.log(gridID);
+                }
+            } else {  
+                gameCount = 1;
+                clearTimeout(timer);
+            }
+        });
     }
-    if(correct === gameCount){
-        gameCount++;
-    }
-  });
 }, mainDelay);
 
 // I need to keep track of the users clicks
 // i.e. when click happens, keep a counter to track the number of clicks
 // then use that number to check the ID of the square clicked against the indexed array using " no.of clicks" as the index
+
+// ***
+// now I need the game to advance to next level when successful
+// or end when the guess is incorrect!
+// need to refactor above code and put it in functions
