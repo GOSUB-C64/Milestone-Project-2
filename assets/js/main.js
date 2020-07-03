@@ -201,7 +201,7 @@ let interval;
 let interval2;
 
 let gridID;
-
+let userClickGridID;
 // gridID is going to be used to hold the ID of the tile which was clicked
 
 mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
@@ -226,8 +226,12 @@ let timer = setTimeout(function () {
         clicked += 1;
         console.log("Tile Clicked!");
         gridID = "#" + $(this).attr("id"); // get the ID of which of the 16 elements (divs) clicked
-        colour = getColour(gridID);
-        $(gridID).css("background-color", colour);
+        userClickGridID = gridID.slice(5); // remove 1st five characters from the ID leaving only the number part to return the colour
+        userClickGridID = parseInt(userClickGridID);
+        console.log(userClickGridID);
+        userColour = getColour(userClickGridID);
+        console.log(userColour);
+        $(gridID).css("background-color", userColour);
         console.log(`${index} checking ${gridID} against ${tileArray[index]}`);
         if (gridID === tileArray[index]) {
           correct++;
