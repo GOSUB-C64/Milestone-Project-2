@@ -217,31 +217,44 @@ let index = -1;
 let clicked = 0;
 let correct = 0;
 let timer = setTimeout(function () {
+  // if guess is correct then execute code in this 'IF'
   if (correct !== gameCount) {
-    // if guess is correct then execute code in this 'IF'
     $(".tile").click(function () {
-      if (clicked < gameCount) {
-        // does the number of guesses == the number of grid squares illuminated ?
-        index += 1;
-        clicked += 1;
+      clicked += 1; // keep track of clicks
+
+      // do the number of guesses == the number of grid squares illuminated ?
+      if (clicked <= gameCount) {
+        index += 1; // index is used to compare tile clicked with computers choice
         console.log("Tile Clicked!");
-        gridID = "#" + $(this).attr("id"); // get the ID of which of the 16 elements (divs) clicked
+        gridID = "#" + $(this).attr("id"); // build the ID of which of the 16 elements (divs) was clicked
         userClickGridID = gridID.slice(5); // remove 1st five characters from the ID leaving only the number part to return the colour
-        userClickGridID = parseInt(userClickGridID);
+        userClickGridID = parseInt(userClickGridID); // convert string to number
         console.log(userClickGridID);
-        userColour = getColour(userClickGridID);
-        console.log(userColour);
-        $(gridID).css("background-color", userColour);
+        userColour = getColour(userClickGridID); // get corresponding grid colour
+        console.log("userColour =", userColour);
+        $(gridID).css("background-color", userColour); // set colour
         console.log(`${index} checking ${gridID} against ${tileArray[index]}`);
-        if (gridID === tileArray[index]) {
-          correct++;
-          console.log(gridID);
-          console.log(`${correct} CORRECT!`);
-        } else {
-          // Incorrect guess during sequence - at this point the game ends ***
-          console.log("INCORRECT!");
-          console.log(gridID);
-        }
+
+        // $(".tile").mouseup(function () {
+          if (gridID === tileArray[index]) {
+            correct++;
+            console.log(gridID);
+            console.log(`${correct} CORRECT!`);
+            setTimeout(function(){
+                $(gridID).css("background-color", "#000");
+                console.log("MOUSEUP!");
+            },500);
+            
+          } else {
+            // Incorrect guess during sequence - at this point the game ends ***
+            console.log("INCORRECT!");
+            console.log(gridID);
+            setTimeout(function(){
+                $(gridID).css("background-color", "#000");
+                console.log("MOUSEUP!");
+            },500);
+          }
+        // });
       } else {
         gameCount = 1;
         clearTimeout(timer);
