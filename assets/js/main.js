@@ -208,7 +208,6 @@ mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
 // mainDelay is the total amount of time to wait until all timers are complete before checking user input //
 
 ////////// Main Game Logic //////////
-
 interval = setInterval(setTile, setTileDelay, iteration, gameCount);
 interval2 = setInterval(clearTile, clearTileDelay);
 
@@ -217,6 +216,7 @@ let index = -1;
 let clicked = 0;
 let correct = 0;
 let timer = setTimeout(function () {
+  console.log("READY......");
   // if guess is correct then execute code in this 'IF'
   if (correct !== gameCount) {
     $(".tile").click(function () {
@@ -236,33 +236,39 @@ let timer = setTimeout(function () {
         console.log(`${index} checking ${gridID} against ${tileArray[index]}`);
 
         // $(".tile").mouseup(function () {
-          if (gridID === tileArray[index]) {
-            correct++;
-            console.log(gridID);
-            console.log(`${correct} CORRECT!`);
-            setTimeout(function(){
-                $(gridID).css("background-color", "#000");
-                console.log("MOUSEUP!");
-            },500);
-            
-          } else {
-            // Incorrect guess during sequence - at this point the game ends ***
-            console.log("INCORRECT!");
-            console.log(gridID);
-            setTimeout(function(){
-                $(gridID).css("background-color", "#000");
-                console.log("MOUSEUP!");
-            },500);
-          }
+        if (gridID === tileArray[index]) {
+          correct++;
+          console.log(gridID);
+          console.log(`${correct} CORRECT!`);
+          setTimeout(function () {
+            $(gridID).css("background-color", "#000");
+            console.log("MOUSEUP!");
+            if (correct === gameCount) {
+              console.log("WINNER!!!");
+              gameCount = 1;
+              clicked = 0;
+              correct = 0;
+              index = -1;
+            //   clearTimeout(timer);
+            }
+          }, 500);
+        } else {
+          // Incorrect guess during sequence - at this point the game ends ***
+          console.log("INCORRECT!");
+          console.log(gridID);
+          setTimeout(function () {
+            $(gridID).css("background-color", "#000");
+            console.log("MOUSEUP!");
+          }, 500);
+        }
         // });
       } else {
-        gameCount = 1;
-        clearTimeout(timer);
       }
     });
   }
 }, mainDelay);
 
+// TODO:
 // I need to keep track of the users clicks
 // i.e. when click happens, keep a counter to track the number of clicks
 // then use that number to check the ID of the square clicked against the indexed array using " no.of clicks" as the index
