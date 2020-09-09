@@ -1,3 +1,7 @@
+console.log("X");
+
+
+
 // function to keep the grid squares responsive.
 function responsiveGrid() {
   var width = $(".tile").outerWidth();
@@ -196,7 +200,7 @@ var clearTileDelay = setTileDelay - 400;
 
 var iteration = 0; /* loop counter for the setInterval function */
 var gameCount = 3; /* game starts at 1 grid square(tile) toggling on/off then increments by 1 each time the user is successful */
-
+let correct = 0;
 let interval;
 let interval2;
 
@@ -208,24 +212,24 @@ mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
 // mainDelay is the total amount of time to wait until all timers are complete before checking user input //
 
 ////////// Main Game Logic //////////
-while (correct !== gameCount) {
+//while (correct !== gameCount) {
   interval = setInterval(setTile, setTileDelay, iteration, gameCount);
   interval2 = setInterval(clearTile, clearTileDelay);
 
   // which tile was clicked? //
   let index = -1;
   let clicked = 0;
-  let correct = 0;
+  
   let timer = setTimeout(function () {
     console.log("READY......");
     // if user's guess is correct then execute code in this 'IF'
     if (correct !== gameCount) {
       $(".tile").click(function () {
-        clicked += 1; // keep track of clicks
+        clicked ++; // keep track of clicks
 
         // do the number of guesses == the number of grid squares illuminated in this round?
         if (clicked <= gameCount) {
-          index += 1; // index is used to compare tile clicked with computers choice
+          index ++; // index is used to compare tile clicked with computers choice
           console.log("Tile Clicked!");
           gridID = "#" + $(this).attr("id"); // build the ID of which of the 16 elements (divs) was clicked
           userClickGridID = gridID.slice(5); // remove 1st five characters from the ID leaving only the number part to return the colour
@@ -266,7 +270,7 @@ while (correct !== gameCount) {
       });
     }
   }, mainDelay);
-}
+//};
 console.log("You have 3 out of 3 CORRECTO!");
 
 // TODO:
