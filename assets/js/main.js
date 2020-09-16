@@ -1,7 +1,3 @@
-console.log("X");
-
-
-
 // function to keep the grid squares responsive.
 function responsiveGrid() {
   var width = $(".tile").outerWidth();
@@ -15,7 +11,7 @@ $(window).resize(function () {
   responsiveGrid();
 });
 
-// pick random number between 1 and 16 to represent a single tile within the 4x4 grid.
+// pick random number between 1 and 16 (inclusive) to represent a single tile within the 4x4 grid.
 function pickTile() {
   nextTile = Math.floor(Math.random() * 16) + 1;
 
@@ -153,7 +149,7 @@ function displayColouredTile(nextTile, colour) {
 function setTile() {
   if (iteration < gameCount) {
     ++iteration;
-    nextTile = pickTile();
+    nextTile = pickTile(); // get a number between 1/16 inc
     colour.push = getColour(nextTile);
     displayColouredTile(nextTile, colour);
     tileArray.push(currentTile);
@@ -208,28 +204,28 @@ let gridID;
 let userClickGridID;
 // gridID is going to be used to hold the ID of the tile which was clicked
 
-mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
+let mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
 // mainDelay is the total amount of time to wait until all timers are complete before checking user input //
 
 ////////// Main Game Logic //////////
-//while (correct !== gameCount) {
+if (correct !== gameCount) {
   interval = setInterval(setTile, setTileDelay, iteration, gameCount);
   interval2 = setInterval(clearTile, clearTileDelay);
 
   // which tile was clicked? //
   let index = -1;
   let clicked = 0;
-  
+
   let timer = setTimeout(function () {
     console.log("READY......");
     // if user's guess is correct then execute code in this 'IF'
     if (correct !== gameCount) {
       $(".tile").click(function () {
-        clicked ++; // keep track of clicks
+        clicked++; // keep track of clicks to reference array index
 
         // do the number of guesses == the number of grid squares illuminated in this round?
         if (clicked <= gameCount) {
-          index ++; // index is used to compare tile clicked with computers choice
+          index++; // index is used to compare tile clicked with computers choice
           console.log("Tile Clicked!");
           gridID = "#" + $(this).attr("id"); // build the ID of which of the 16 elements (divs) was clicked
           userClickGridID = gridID.slice(5); // remove 1st five characters from the ID leaving only the number part to return the colour
@@ -242,37 +238,47 @@ mainDelay = setTileDelay * gameCount + clearTileDelay * gameCount;
             `${index} checking ${gridID} against ${tileArray[index]}`
           );
 
-          // check user's guess //
+          // check user's guess against the array index of tileArray //
           if (gridID === tileArray[index]) {
             correct++; // user's guess was correct!
             console.log(gridID);
             console.log(`${correct} CORRECT!`);
             setTimeout(function () {
               $(gridID).css("background-color", "#000");
-
+              // its correct but are all guesses correct?
               if (correct === gameCount) {
                 console.log("WINNER!!!");
-                gameCount = 1;
+                gameCount++; // increment game level by 1
                 clicked = 0;
                 correct = 0;
                 index = -1;
+                clearTimeout(timer);
+                clearInterval(interval);
+                clearInterval(interval2);
+              } else if (clicked === gameCount && correct !== gameCount) {
+                console.log("GameOver - you did not match all squares!");
               }
             }, 500);
           } else {
             // Incorrect guess during sequence - at this point the game ends ***
-            console.log("INCORRECT!");
+            console.log("INCORRECT! GAMEOVER!!");
             console.log(gridID);
             setTimeout(function () {
               $(gridID).css("background-color", "#000");
+              clicked = 0;
+              correct = 0;
+              index = -1;
+              clearTimeout(timer);
+              clearInterval(interval);
+              clearInterval(interval2);
             }, 500);
           }
         }
       });
     }
   }, mainDelay);
-//};
-console.log("You have 3 out of 3 CORRECTO!");
-
+}
+console.log("Done!");
 // TODO:
 // * = done
 
