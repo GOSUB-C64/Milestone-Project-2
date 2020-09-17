@@ -26,52 +26,52 @@ function getColour(nextTile) {
   nextColour = nextTile;
   switch (nextColour) {
     case 1:
-      colour = "Red";
+      colour.push("Red");
       return colour;
     case 2:
-      colour = "Green";
+      colour.push("Green");
       return colour;
     case 3:
-      colour = "Blue";
+      colour.push("Blue");
       return colour;
     case 4:
-      colour = "Yellow";
+      colour.push("Yellow");
       return colour;
     case 5:
-      colour = "Orange";
+      colour.push("Orange");
       return colour;
     case 6:
-      colour = "Magenta";
+      colour.push("Magenta");
       return colour;
     case 7:
-      colour = "White";
+      colour.push("White");
       return colour;
     case 8:
-      colour = "Violet";
+      colour.push("Violet");
       return colour;
     case 9:
-      colour = "Cyan";
+      colour.push("Cyan");
       return colour;
     case 10:
-      colour = "Brown";
+      colour.push("Brown");
       return colour;
     case 11:
-      colour = "Grey";
+      colour.push("Grey");
       return colour;
     case 12:
-      colour = "Teal";
+      colour.push("Teal");
       return colour;
     case 13:
-      colour = "DeepPink";
+      colour.push("DeepPink");
       return colour;
     case 14:
-      colour = "GreenYellow";
+      colour.push("GreenYellow");
       return colour;
     case 15:
-      colour = "GoldenRod";
+      colour.push("GoldenRod");
       return colour;
     case 16:
-      colour = "IndianRed";
+      colour.push("IndianRed");
       return colour;
   }
 }
@@ -82,80 +82,89 @@ function displayColouredTile(nextTile, colour) {
     case 1:
       $("#tile1").css("background-color", colour);
       currentTile = "#tile1";
-      return(currentTile);
+      return currentTile;
     case 2:
       $("#tile2").css("background-color", colour);
       currentTile = "#tile2";
-      return(currentTile);
+      return currentTile;
     case 3:
       $("#tile3").css("background-color", colour);
       currentTile = "#tile3";
-      return(currentTile);
+      return currentTile;
     case 4:
       $("#tile4").css("background-color", colour);
       currentTile = "#tile4";
-      return(currentTile);
+      return currentTile;
     case 5:
       $("#tile5").css("background-color", colour);
       currentTile = "#tile5";
-      return(currentTile);
+      return currentTile;
     case 6:
       $("#tile6").css("background-color", colour);
       currentTile = "#tile6";
-      return(currentTile);
+      return currentTile;
     case 7:
       $("#tile7").css("background-color", colour);
       currentTile = "#tile7";
-      return(currentTile);
+      return currentTile;
     case 8:
       $("#tile8").css("background-color", colour);
       currentTile = "#tile8";
-      return(currentTile);
+      return currentTile;
     case 9:
       $("#tile9").css("background-color", colour);
       currentTile = "#tile9";
-      return(currentTile);
+      return currentTile;
     case 10:
       $("#tile10").css("background-color", colour);
       currentTile = "#tile10";
-      return(currentTile);
+      return currentTile;
     case 11:
       $("#tile11").css("background-color", colour);
       currentTile = "#tile11";
-      return(currentTile);
+      return currentTile;
     case 12:
       $("#tile12").css("background-color", colour);
       currentTile = "#tile12";
-      return(currentTile);
+      return currentTile;
     case 13:
       $("#tile13").css("background-color", colour);
       currentTile = "#tile13";
-      return(currentTile);
+      return currentTile;
     case 14:
       $("#tile14").css("background-color", colour);
       currentTile = "#tile14";
-      return(currentTile);
+      return currentTile;
     case 15:
       $("#tile15").css("background-color", colour);
       currentTile = "#tile15";
-      return(currentTile);
+      return currentTile;
     case 16:
       $("#tile16").css("background-color", colour);
       currentTile = "#tile16";
-      return(currentTile);
+      return currentTile;
   }
 }
 
+function displayAllTiles() {
+  setTimeout(function () {
+    for (let x = 0; x < gameCount; x++) {
+      $(tileArray[x]).css("background-color", colour[x]);
+    }
+  }, setTileDelay);
+  console.log("displaying all tiles");
+  $("div").addClass("clearTiles");
+}
 
 // putting it together
 function setTile() {
   if (iteration < gameCount) {
     ++iteration;
     nextTile = pickTile(); // get a number between 1/16 inc
-    colour.push = getColour(nextTile);
+    getColour(nextTile);
+
     displayColouredTile(nextTile, colour);
     tileArray.push(currentTile);
-
   } else {
     clearInterval(interval);
     console.log("**** FINISHED ****");
@@ -182,9 +191,10 @@ function clearTile() {
   $(currentTile).css("background-color", "#000");
   //clearInterval(interval2);
 }
+function clearAllTiles(){
 
-$("div").addClass("clearTiles");
-
+    $("div").addClass("clearTiles");
+}
 // array to keep track of the tile Id's
 let tileSeq = []; // holds next tile in
 
@@ -192,6 +202,7 @@ let tileArray = [];
 
 var nextTile;
 var colour = [];
+// var colArray = [];
 var currentTile;
 
 var setTileDelay = 1500;
@@ -220,9 +231,7 @@ function startGame() {
   interval2 = setInterval(clearTile, clearTileDelay);
 }
 
-
 ////////// Main Game Logic //////////
-
 
 let timer = setInterval(function () {
   console.log("READY......");
@@ -257,14 +266,16 @@ let timer = setInterval(function () {
               clearInterval(timer);
               clearInterval(interval);
               clearInterval(interval2);
-              gameCount++; // increment game level by 1
               clicked = 0;
               correct = 0;
               index = -1;
-              
-              startGame();
-            } else if (clicked === gameCount && correct !== gameCount) {
-              console.log("GameOver - you did not match all squares!");
+
+              gameCount++; // increment game level by 1
+              startGame(); // get new grid square
+              displayAllTiles(); // display sequence again
+              clearAllTiles();
+              // } else if (clicked === gameCount && correct !== gameCount) {
+              //   console.log("GameOver - you did not match all squares!");
             }
           }, 500);
         } else {
