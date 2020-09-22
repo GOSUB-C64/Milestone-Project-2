@@ -26,53 +26,53 @@ function getColour(nextTile) {
   nextColour = nextTile;
   switch (nextColour) {
     case 1:
-      colour.push("Red");
-      return colour;
+      colour = "Red";
+      return;
     case 2:
-      colour.push("Green");
-      return colour;
+      colour = "Green";
+      return;
     case 3:
-      colour.push("Blue");
-      return colour;
+      colour = "Blue";
+      return;
     case 4:
-      colour.push("Yellow");
-      return colour;
+      colour = "Yellow";
+      return;
     case 5:
-      colour.push("Orange");
-      return colour;
+      colour = "Orange";
+      return;
     case 6:
-      colour.push("Magenta");
-      return colour;
+      colour = "Magenta";
+      return;
     case 7:
-      colour.push("White");
-      return colour;
+      colour = "White";
+      return;
     case 8:
-      colour.push("Violet");
-      return colour;
+      colour = "Violet";
+      return;
     case 9:
-      colour.push("Cyan");
-      return colour;
+      colour = "Cyan";
+      return;
     case 10:
-      colour.push("Brown");
-      return colour;
+      colour = "Brown";
+      return;
     case 11:
-      colour.push("Grey");
-      return colour;
+      colour = "Grey";
+      return;
     case 12:
-      colour.push("Teal");
-      return colour;
+      colour = "Teal";
+      return;
     case 13:
-      colour.push("DeepPink");
-      return colour;
+      colour = "DeepPink";
+      return;
     case 14:
-      colour.push("GreenYellow");
-      return colour;
+      colour = "GreenYellow";
+      return;
     case 15:
-      colour.push("GoldenRod");
-      return colour;
+      colour = "GoldenRod";
+      return;
     case 16:
-      colour.push("IndianRed");
-      return colour;
+      colour = "IndianRed";
+      return;
   }
 }
 
@@ -147,23 +147,28 @@ function displayColouredTile(nextTile, colour) {
 }
 
 function displayAllTiles() {
-  setTimeout(function () {
-    for (let x = 0; x < gameCount; x++) {
-      $(tileArray[x]).css("background-color", colour[x]);
-    }
-  }, setTileDelay);
+  for (let x = 0; x < gameCount; x++) {
+    setTimeout(function () {
+      $(tileArray[x]).css("background-color", colArray[x]);
+    }, 2000);
+  }
+
+  //   setTimeout(function () {
+  //     for (let x = 0; x < gameCount; x++) {
+  //       $(tileArray[x]).css("background-color", "#000");
+  //     }
+  //   }, 1000);
   console.log("displaying all tiles");
-  $("div").addClass("clearTiles");
 }
 
 // putting it together
 function setTile() {
   if (iteration < gameCount) {
-    ++iteration;
     nextTile = pickTile(); // get a number between 1/16 inc
     getColour(nextTile);
-
     displayColouredTile(nextTile, colour);
+    colArray.push(colour);
+    iteration++;
     tileArray.push(currentTile);
   } else {
     clearInterval(interval);
@@ -191,9 +196,8 @@ function clearTile() {
   $(currentTile).css("background-color", "#000");
   //clearInterval(interval2);
 }
-function clearAllTiles(){
-
-    $("div").addClass("clearTiles");
+function clearAllTiles() {
+  $("div").addClass("clearTiles");
 }
 // array to keep track of the tile Id's
 let tileSeq = []; // holds next tile in
@@ -201,8 +205,8 @@ let tileSeq = []; // holds next tile in
 let tileArray = [];
 
 var nextTile;
-var colour = [];
-// var colArray = [];
+let colour;
+let colArray = [];
 var currentTile;
 
 var setTileDelay = 1500;
@@ -248,10 +252,15 @@ let timer = setInterval(function () {
         userClickGridID = gridID.slice(5); // remove 1st five characters from the ID leaving only the number part to return the colour
         userClickGridID = parseInt(userClickGridID); // convert string to number
         console.log(userClickGridID);
-        userColour = getColour(userClickGridID); // get corresponding grid colour
-        console.log("userColour =", userColour);
-        $(gridID).css("background-color", userColour); // set colour
-        console.log(`${index} checking ${gridID} against ${tileArray[index]}`);
+
+        setTimeout(function () {
+          userColour = getColour(userClickGridID); // get corresponding grid colour
+          console.log("userColour =", userColour);
+          $(gridID).css("background-color", userColour); // set colour
+          console.log(
+            `${index} checking ${gridID} against ${tileArray[index]}`
+          );
+        }, 2000);
 
         // check user's guess against the array index of tileArray //
         if (gridID === tileArray[index]) {
@@ -273,7 +282,7 @@ let timer = setInterval(function () {
               gameCount++; // increment game level by 1
               startGame(); // get new grid square
               displayAllTiles(); // display sequence again
-              clearAllTiles();
+              //   clearAllTiles();
               // } else if (clicked === gameCount && correct !== gameCount) {
               //   console.log("GameOver - you did not match all squares!");
             }
@@ -297,7 +306,6 @@ let timer = setInterval(function () {
   }
 }, mainDelay);
 
-console.log("Done!");
 // TODO:
 // * = done
 
