@@ -148,17 +148,16 @@ function displayColouredTile(nextTile, colour) {
 
 function displayAllTiles() {
   for (let x = 0; x < gameCount; x++) {
+
     setTimeout(function () {
       $(tileArray[x]).css("background-color", colArray[x]);
     }, 2000);
+
+    setTimeout(function () {
+      $(tileArray[x]).css("background-color", "#000");
+    }, 1000);
   }
 
-  //   setTimeout(function () {
-  //     for (let x = 0; x < gameCount; x++) {
-  //       $(tileArray[x]).css("background-color", "#000");
-  //     }
-  //   }, 1000);
-  console.log("displaying all tiles");
 }
 
 // putting it together
@@ -206,6 +205,7 @@ let tileArray = [];
 
 var nextTile;
 let colour;
+let userColour;
 let colArray = [];
 var currentTile;
 
@@ -253,16 +253,14 @@ let timer = setInterval(function () {
         userClickGridID = parseInt(userClickGridID); // convert string to number
         console.log(userClickGridID);
 
-        setTimeout(function () {
-          colour = getColour(userClickGridID); // get corresponding grid colour
-          
-          console.log("userColour =", colour);
+        getColour(userClickGridID); // get corresponding grid cell colour
+        userColour = colour;
+        console.log("userColour =", userColour);
 
-          $("#gridID").css("background-color", "#00ffff"); // set colour
-          console.log(
-            `${index} checking ${gridID} against ${tileArray[index]}`
-          );
-        }, 1000);
+        // change colour of clicked grid cell
+        $(gridID).css("background-color", userColour); // set colour
+
+        console.log(`${index} checking ${gridID} against ${tileArray[index]}`);
 
         // check user's guess against the array index of tileArray //
         // no need to check the colour                             //
