@@ -254,15 +254,18 @@ let timer = setInterval(function () {
         console.log(userClickGridID);
 
         setTimeout(function () {
-          userColour = getColour(userClickGridID); // get corresponding grid colour
-          console.log("userColour =", userColour);
-          $(gridID).css("background-color", userColour); // set colour
+          colour = getColour(userClickGridID); // get corresponding grid colour
+          
+          console.log("userColour =", colour);
+
+          $("#gridID").css("background-color", "#00ffff"); // set colour
           console.log(
             `${index} checking ${gridID} against ${tileArray[index]}`
           );
-        }, 2000);
+        }, 1000);
 
         // check user's guess against the array index of tileArray //
+        // no need to check the colour                             //
         if (gridID === tileArray[index]) {
           correct++; // user's guess was correct!
           console.log(gridID);
