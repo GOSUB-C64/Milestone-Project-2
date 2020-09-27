@@ -70,7 +70,7 @@ function blinkTile() {
       acceptUserInput();
     }
     clearTimeout(intervalID);
-  }, 2000);
+  }, 1000);
 }
 
 function acceptUserInput() {
@@ -96,19 +96,23 @@ $(".tile").click(function () {
   var intervalID = setInterval(() => {
     $("#tile" + tileId).css("background-color", "#000");
     clearTimeout(intervalID);
-  }, 2000);
+  }, 1000);
+
+ 
+  if (tileId !== tileSeq[noOfClicks]) {
+    console.log(tileId, tileSeq[noOfClicks]);
+    alert("! GAME OVER !");
+  }
+
+  noOfClicks++; // keep track of clicks to reference array index
+  console.log("clicks = ", noOfClicks);
 
   if (noOfClicks === gameCount) {
     // Seq same
     if (JSON.stringify(tileSeq) === JSON.stringify(answerSeq)) {
-      alert("WIn");
-      // Seq NOT same
-    } else {
-      alert("Lose");
+	  alert("WIn");
+	  gameCount ++;
+	  blinkTile();
     }
-  } else if (tileId !== tileSeq[noOfClicks]) {
-    console.log(tileId, tileSeq[noOfClicks]);
-    alert("You Lose!");
   }
-  noOfClicks++; // keep track of clicks to reference array index
 });
