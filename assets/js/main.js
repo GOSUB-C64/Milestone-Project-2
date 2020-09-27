@@ -116,6 +116,7 @@ $(".tile").click(function () {
   console.log("NUMBER OF CLICKS = ",noOfClicks);
   if (noOfClicks === gameCount) {
       console.log("RETURNING!!!");
+      $(".tile").off("click");
     return;
   }
 
