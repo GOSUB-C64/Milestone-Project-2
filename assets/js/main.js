@@ -19,6 +19,7 @@ let answerSeq = []; // holds users guess for comparison later
 var gameCount = 3; /* game starts at 1 grid square(tile) toggling on/off then increments by 1 each time the user is successful */
 var isClickEnabled = false;
 var noOfClicks = 0;
+var index = 0;
 
 // pick random number between 1 and 16 (inclusive) to represent a single tile within the 4x4 grid.
 function pickTile() {
@@ -82,8 +83,22 @@ function acceptUserInput() {
 blinkTile();
 console.log(tileSeq);
 
+console.log("clicks(outside) = ", noOfClicks);
+if (noOfClicks === gameCount) {
+    console.log("FINAL TEST")
+  // Seq same
+  if (JSON.stringify(tileSeq) === JSON.stringify(answerSeq)) {
+    alert("WIn");
+    // gameCount++;
+    // blinkTile();
+  }
+}
+
 $(".tile").click(function () {
   if (!isClickEnabled) return;
+
+  noOfClicks++;
+  console.log("clicks = ", noOfClicks);
 
   var tileIdString = $(this).attr("id"); // build the ID of which of the 16 elements (divs) was clicked
   var tileId = parseInt(tileIdString.split("tile")[1]);
@@ -93,26 +108,23 @@ $(".tile").click(function () {
   // Glow the tile
   var tileColor = getColour(tileId);
   displayColouredTile(tileId, tileColor); // display users guess to screen grid
+
   var intervalID = setInterval(() => {
     $("#tile" + tileId).css("background-color", "#000");
     clearTimeout(intervalID);
   }, 1000);
-
- 
-  if (tileId !== tileSeq[noOfClicks]) {
-    console.log(tileId, tileSeq[noOfClicks]);
-    alert("! GAME OVER !");
+  console.log("NUMBER OF CLICKS = ",noOfClicks);
+  if (noOfClicks === gameCount) {
+      console.log("RETURNING!!!");
+    return;
   }
 
-  noOfClicks++; // keep track of clicks to reference array index
-  console.log("clicks = ", noOfClicks);
-
-  if (noOfClicks === gameCount) {
-    // Seq same
-    if (JSON.stringify(tileSeq) === JSON.stringify(answerSeq)) {
-	  alert("WIn");
-	  gameCount ++;
-	  blinkTile();
-    }
+  if (tileId !== tileSeq[index]) {
+    console.log(tileId, tileSeq[index]);
+    alert("! GAME OVER !");
+  } else {
+    index++;
   }
 });
+
+
