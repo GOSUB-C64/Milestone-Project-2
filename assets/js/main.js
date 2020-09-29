@@ -114,10 +114,17 @@ $(".tile").click(function () {
     clearTimeout(intervalID);
   }, 1000);
   console.log("NUMBER OF CLICKS = ",noOfClicks);
+
   if (noOfClicks === gameCount) {
-      console.log("RETURNING!!!");
-      $(".tile").off("click");
-    return;
+      console.log("comparing noOfClicks to gameCount!!!");
+    //   $(".tile").off("click");
+    gameCount++;
+    for(let x = 0; x<gameCount; x++){
+      answerSeq[x] = 0;  
+    }
+    
+    blinkTile();
+    
   }
 
   if (tileId !== tileSeq[index]) {
