@@ -68,7 +68,7 @@ function displayCurrentSeq(tileSeq, x) {
   displayColouredTile(tileId, tileColor); // this line works
   var intervalID = setInterval(() => {
     $("#tile" + tileId).css("background-color", "#000");
-    if (x <= tileSeq.length) {
+    if (x < tileSeq.length) {
       console.log("IN if statement of displayCurrentSeq fn");
 
       x++;
@@ -119,8 +119,14 @@ if (noOfClicks === gameCount) {
 
 $(".tile").click(function () {
   if (!isClickEnabled) return;
+  //   $(tileSeq[gameCount-1]).css("background-color", "#000");
 
   noOfClicks++;
+  if (noOfClicks === gameCount) {
+      debugger;
+    $("#tile" + tileId).css("background-color", "#000");
+  }
+  
   console.log("clicks = ", noOfClicks);
 
   var tileIdString = $(this).attr("id"); // build the ID of which of the 16 elements (divs) was clicked
