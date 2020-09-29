@@ -85,7 +85,7 @@ console.log(tileSeq);
 
 console.log("clicks(outside) = ", noOfClicks);
 if (noOfClicks === gameCount) {
-    console.log("FINAL TEST")
+  console.log("FINAL TEST");
   // Seq same
   if (JSON.stringify(tileSeq) === JSON.stringify(answerSeq)) {
     alert("WIn");
@@ -113,26 +113,22 @@ $(".tile").click(function () {
     $("#tile" + tileId).css("background-color", "#000");
     clearTimeout(intervalID);
   }, 1000);
-  console.log("NUMBER OF CLICKS = ",noOfClicks);
-
-  if (noOfClicks === gameCount) {
-      console.log("comparing noOfClicks to gameCount!!!");
-    //   $(".tile").off("click");
-    gameCount++;
-    for(let x = 0; x<gameCount; x++){
-      answerSeq[x] = 0;  
-    }
-    
-    blinkTile();
-    
-  }
+  console.log("NUMBER OF CLICKS = ", noOfClicks);
 
   if (tileId !== tileSeq[index]) {
     console.log(tileId, tileSeq[index]);
     alert("! GAME OVER !");
+  } else if (noOfClicks === gameCount) {
+    console.log("comparing noOfClicks to gameCount!!!");
+    //   $(".tile").off("click");
+    gameCount++;
+    noOfClicks = 0;
+
+    answerSeq = [];
+    index = 0;
+
+    blinkTile();
   } else {
     index++;
   }
 });
-
-
