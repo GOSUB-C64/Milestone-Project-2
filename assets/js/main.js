@@ -13,9 +13,10 @@ $(window).resize(function () {
   responsiveGrid();
 });
 
-// array to keep track of the tile Id's
+let tileId, tileColor;
 let tileSeq = []; // holds next tile in
 let answerSeq = []; // holds users guess for comparison later
+let tileColorSeq = []; // store colours of tiles
 var gameCount = 3; /* game starts at 1 grid square(tile) toggling on/off then increments by 1 each time the user is successful */
 var isClickEnabled = false;
 var noOfClicks = 0;
@@ -53,16 +54,40 @@ function getColour(nextTile) {
 }
 // display on screen and save current tile to 'currentTile'
 function displayColouredTile(nextTile, colour) {
-  var tileId = "#tile" + nextTile;
+  var tileId = "#tile" + nextTile; // build element ID
   $(tileId).css("background-color", colour);
-  currentTile = tileId;
-  return currentTile;
+  return;
+}
+
+function displayCurrentSeq(tileSeq, x) {
+  isClickEnabled = false;
+  console.log("IN displayCurrentSeq fn");
+
+  tileId = tileSeq[x];
+  tileColor = tileColorSeq[x];
+  displayColouredTile(tileId, tileColor); // this line works
+  var intervalID = setInterval(() => {
+    $("#tile" + tileId).css("background-color", "#000");
+    if (x <= tileSeq.length) {
+      console.log("IN if statement of displayCurrentSeq fn");
+
+      x++;
+      displayCurrentSeq(tileSeq, x);
+    } else {
+      acceptUserInput();
+    }
+    clearTimeout(intervalID);
+    console.log("TIMEOUT CLEARED!!");
+  }, 1000);
+  return;
 }
 
 function blinkTile() {
-  var tileId = pickTile(); // get a number between 1/16 inc
-  var tileColor = getColour(tileId);
+  tileId = pickTile(); // get a number between 1/16 inc
+  tileColor = getColour(tileId);
+  tileColorSeq.push(tileColor);
   displayColouredTile(tileId, tileColor);
+  //////
   var intervalID = setInterval(() => {
     $("#tile" + tileId).css("background-color", "#000");
     if (tileSeq.length < gameCount) {
@@ -71,7 +96,7 @@ function blinkTile() {
       acceptUserInput();
     }
     clearTimeout(intervalID);
-  }, 1000);
+  }, 2000);
 }
 
 function acceptUserInput() {
@@ -89,8 +114,6 @@ if (noOfClicks === gameCount) {
   // Seq same
   if (JSON.stringify(tileSeq) === JSON.stringify(answerSeq)) {
     alert("WIn");
-    // gameCount++;
-    // blinkTile();
   }
 }
 
@@ -121,13 +144,17 @@ $(".tile").click(function () {
   } else if (noOfClicks === gameCount) {
     console.log("comparing noOfClicks to gameCount!!!");
     //   $(".tile").off("click");
-    gameCount++;
-    noOfClicks = 0;
+    gameCount++; // increment game level (add 1 more tile)
+    noOfClicks = 0; // reset the clicks
 
-    answerSeq = [];
+    answerSeq = []; // clear out the users' answer array
     index = 0;
 
-    blinkTile();
+    tileId = pickTile(); // get a number between 1/16 inc
+    tileColor = getColour(tileId);
+    tileColorSeq.push(tileColor);
+    let x = 0;
+    displayCurrentSeq(tileSeq, x);
   } else {
     index++;
   }
