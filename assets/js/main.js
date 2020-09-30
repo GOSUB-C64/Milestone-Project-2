@@ -13,7 +13,7 @@ $(window).resize(function () {
   responsiveGrid();
 });
 
-let tileId, tileColor;
+let tileId, tileColor, tileIdString;
 let tileSeq = []; // holds next tile in
 let answerSeq = []; // holds users guess for comparison later
 let tileColorSeq = []; // store colours of tiles
@@ -26,7 +26,18 @@ var index = 0;
 function pickTile() {
   var tile = Math.floor(Math.random() * 16) + 1;
   // build tileSeq array to hold pattern
-  tileSeq.push(tile); /* add to array */
+  for (let i = 0; tileSeq.length; i++) {
+      console.log(i);
+    if (i === 0) {
+        console.log("I===0");
+      tileSeq.push(tile);
+    } else if (tileSeq[i] === tileSeq[i - 1]) {
+        console.log("***");
+      pickTile();
+    } else {
+      tileSeq.push(tile); /* add to array */
+    }
+  }
   return tile;
 }
 // assign each tile (div) its own color
@@ -122,31 +133,31 @@ $(".tile").click(function () {
   //   $(tileSeq[gameCount-1]).css("background-color", "#000");
 
   noOfClicks++;
-  if (noOfClicks === gameCount) {
+  if (noOfClicks <= gameCount) {
+    console.log("clicks = ", noOfClicks);
+
+    tileIdString = $(this).attr("id"); // build the ID of which of the 16 elements (divs) was clicked
+    tileId = parseInt(tileIdString.split("tile")[1]);
+    console.log(tileId);
+    answerSeq.push(tileId);
+
+    // Glow the tile
+    var tileColor = getColour(tileId);
+    displayColouredTile(tileId, tileColor); // display users guess to screen grid
+
+    // (un)-glow the tile
+    var intervalID = setInterval(() => {
+      $("#tile" + tileId).css("background-color", "#000");
       debugger;
-    $("#tile" + tileId).css("background-color", "#000");
+      clearTimeout(intervalID);
+    }, 1000);
   }
-  
-  console.log("clicks = ", noOfClicks);
-
-  var tileIdString = $(this).attr("id"); // build the ID of which of the 16 elements (divs) was clicked
-  var tileId = parseInt(tileIdString.split("tile")[1]);
-  console.log(tileId);
-  answerSeq.push(tileId);
-
-  // Glow the tile
-  var tileColor = getColour(tileId);
-  displayColouredTile(tileId, tileColor); // display users guess to screen grid
-
-  var intervalID = setInterval(() => {
-    $("#tile" + tileId).css("background-color", "#000");
-    clearTimeout(intervalID);
-  }, 1000);
   console.log("NUMBER OF CLICKS = ", noOfClicks);
 
   if (tileId !== tileSeq[index]) {
     console.log(tileId, tileSeq[index]);
     alert("! GAME OVER !");
+    debugger;
   } else if (noOfClicks === gameCount) {
     console.log("comparing noOfClicks to gameCount!!!");
     //   $(".tile").off("click");
