@@ -26,19 +26,19 @@ var index = 0;
 function pickTile() {
   var tile = Math.floor(Math.random() * 16) + 1;
   // build tileSeq array to hold pattern
-  for (let i = 0; tileSeq.length; i++) {
-      console.log(i);
-    if (i === 0) {
-        console.log("I===0");
-      tileSeq.push(tile);
-    } else if (tileSeq[i] === tileSeq[i - 1]) {
+  if (tileSeq.length > 0) {
+    for (let i = 0; tileSeq.length; i++) {
+      if (tileSeq[i] === tileSeq[i - 1]) {
         console.log("***");
-      pickTile();
-    } else {
-      tileSeq.push(tile); /* add to array */
+        pickTile();
+      } else {
+        tileSeq.push(tile); /* add to array */
+      }
     }
+    tileSeq.push(tile); /* add to array */
+
+    return tile;
   }
-  return tile;
 }
 // assign each tile (div) its own color
 function getColour(nextTile) {
