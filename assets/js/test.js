@@ -6,6 +6,7 @@ let numArr = [];
 
 function numSeq() {
   var randNum = Math.floor(Math.random() * 16) + 1;
+
   return randNum;
 }
 
@@ -15,21 +16,29 @@ function numSeq() {
 var currentNum = 1; // counter
 let num = numSeq();
 numArr.push(num);
+var flagged = false;
 
 while (currentNum < 10) {
   if (currentNum > 1) {
-    for (var x = 1; x <= currentNum; x++) {
-      console.log(x);
+    for (let x = 1; x <= currentNum; x++) {
+      console.log(x, num);
+      debugger;
       if (num === numArr[x]) {
+        flagged = true;
         console.log("TRUE");
-        num = numSeq();
+        // x = currentNum;
+      } else {
         numArr.push(num);
       }
     }
+    if (flagged) {
+      console.log("FLAGGED!!!");
+      flagged = false;
+      numArr.pop();
+    }
   }
-  currentNum++;
   num = numSeq();
-  numArr.push(num);
+  currentNum++;
 }
 console.log(numArr);
 
