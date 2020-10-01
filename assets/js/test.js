@@ -1,46 +1,21 @@
-///  global variables  ///
+function selectNumber() {
+  var numArr = [];
+  var num = 0;
+  var index = 1;
 
-let numArr = [];
-
-///  functions  ///
-
-function numSeq() {
-  var randNum = Math.floor(Math.random() * 16) + 1;
-
-  return randNum;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///  code logic  ///
-var currentNum = 1; // counter
-let num = numSeq();
-numArr.push(num);
-var flagged = false;
-
-while (currentNum < 10) {
-  if (currentNum > 1) {
-    for (let x = 1; x <= currentNum; x++) {
-      console.log(x, num);
-      debugger;
-      if (num === numArr[x]) {
-        flagged = true;
-        console.log("TRUE");
-        // x = currentNum;
-      } else {
+  while (index < 10) {
+    num = Math.floor(Math.random() * 16) + 1;
+    if (numArr === []) {
+      numArr.push(num);
+    } else {
+      if (num != numArr[index]) {
         numArr.push(num);
+        index++;
       }
     }
-    if (flagged) {
-      console.log("FLAGGED!!!");
-      flagged = false;
-      numArr.pop();
-    }
   }
-  num = numSeq();
-  currentNum++;
+  console.log(numArr);
 }
-console.log(numArr);
 
-// numArr.push(numSeq());
-// console.log(numArr);
+
+selectNumber();
